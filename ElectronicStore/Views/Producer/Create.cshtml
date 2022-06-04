@@ -1,0 +1,39 @@
+﻿@model Producer
+@{
+    ViewData["Title"] = "Add a new producer.";
+}
+
+<div class="row text">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h1>Add a producer.</h1>
+        </p>
+        <div class="row">
+            <div class="col-md-8 offset-3">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="producerPictureURL" class="control-label"></label>
+                        <input asp-for="producerPictureURL" class="form-control" />
+                        <span asp-validation-for="producerPictureURL" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="producerName" class="control-label"></label>
+                        <input asp-for="producerName" class="form-control" />
+                        <span asp-validation-for="producerName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="producerDescription" class="control-label"></label>
+                        <input asp-for="producerDescription" class="form-control" />
+                        <span asp-validation-for="producerDescription" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-outline-success float-right" />
+                        <a class="btn btn-outline-dark" asp-action="Index">Show All</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

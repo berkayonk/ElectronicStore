@@ -1,0 +1,38 @@
+﻿@model Warranty
+@{ 
+    ViewData["Title"] = "Update warranty.";
+}
+
+<div class="row text">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h1>Update warranty.</h1>
+        </p>
+        <div class="row">
+            <div class="col-md-8 offset-3">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="warrantyPictureURL" class="control-label"></label>
+                        <input asp-for="warrantyPictureURL" class="form-control" />
+                        <span asp-validation-for="warrantyPictureURL" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="warrantyName" class="control-label"></label>
+                        <input asp-for="warrantyName" class="form-control" />
+                        <span asp-validation-for="warrantyName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="warrantyDescription" class="control-label"></label>
+                        <input asp-for="warrantyDescription" class="form-control" />
+                        <span asp-validation-for="warrantyDescription" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Update" class="btn btn-outline-success float-right" />
+                        <a class="btn btn-outline-dark" asp-action="Index">Show All</a>
+                    </div>
+                </form>               
+            </div>
+        </div>
+    </div>
+</div>

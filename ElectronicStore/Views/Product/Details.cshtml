@@ -1,0 +1,82 @@
+﻿@*Define the model*@
+@model Product
+@*Define ViewData*@
+@{
+    ViewData["Title"] = "Details of product.";
+}
+
+@*Code Part*@
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <div class="card mb-3" style="max-width: 550px">
+            <div class="row g-0">
+                <div class="col-md-12">
+                    <div class="card-header text-white-50 bg-info">
+                        <p class="card-text">
+                            <h5 class="card-title">
+                                @Model.productName
+                            </h5>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <img src="@Model.productPictureURL" width="100%" alt="@Model.productName">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <p class="card-text">@Model.productDescription</p>
+                        <p class="card-text">
+                            <b> Seller: </b>
+                            <a asp-controller="Seller" asp-action="Details" asp-route-id="@Model.sellerID">
+                                @Model.sellers.sellerName
+                            </a>
+                        </p>
+                        <p class="card-text">
+                            <b>Producer: </b>
+                            <a asp-controller="Producer" asp-action="Details" asp-route-id="@Model.producerID">
+                                @Model.producers.producerName
+                            </a>
+                        </p>
+                        <p class="card-text"><b>Category: </b>@Model.productCategory</p>
+                        <p class="card-text"><b>List Date: </b>@Model.producyListDate.ToString("dd MM yyyy")</p>
+                        <p class="card-text">
+                            <b>Status: </b>
+                            @if (DateTime.Now >= Model.producyListDate)
+                            {
+                                <span class="badge bg-success text-white">In Stock</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger text-white">Soon in Stock</span>
+                            }
+                        </p>
+                        <p class="card-text">
+                            <b>Warranty: </b>
+                            <hr />
+                            <div class="row">
+                                @foreach (var warranty in Model.warrantytoProducts)
+                                {
+                                    <div class="column text-center">
+                                        <img class="border border-success " src="@warranty.warranty.warrantyPictureURL" style="max-width: 160px"/>
+                                        <br />
+                                        <a asp-controller="Warranty" asp-action="Details" asp-route-id="@warranty.Id">@warranty.warranty.warrantyName</a>
+                                    </div>
+                                }
+                            </div>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="card-footer">
+                        <p class="card-text">
+                            <a class="btn btn-outline-primary float-right" asp-action="Index">
+                                Return
+                            </a>
+                            <a class="btn btn-success text-white-50"><i class="bi bi-cart-plus"></i> Add to cart (Price @Model.productPrice.ToString("c"))</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
