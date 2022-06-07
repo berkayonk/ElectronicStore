@@ -1,7 +1,9 @@
 using ElectronicStore.Data;
+using ElectronicStore.Data.Cart;
 using ElectronicStore.Data.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -34,6 +36,12 @@ namespace ElectronicStore
             services.AddScoped<IProducerService, ProducerService>();
             services.AddScoped<ISellerService, SellerService>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IOrdersService, OrdersService>();
+
+            // Shopping Cart Configuration
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped(c => ShoppingCart.getShoppingCart(c));
+            services.AddSession();
 
             services.AddControllersWithViews();
         }
@@ -55,6 +63,8 @@ namespace ElectronicStore
             app.UseStaticFiles();
 
             app.UseRouting();
+            // Use created session
+            app.UseSession();
 
             app.UseAuthorization();
 

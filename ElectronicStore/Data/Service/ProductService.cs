@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ElectronicStore.Data.Service
 {
-    public class ProductService:EntityBaseRepository<Product>, IProductService
+    public class ProductService : EntityBaseRepository<Product>, IProductService
     {
         private readonly DatabaseContext Context;
         public ProductService(DatabaseContext context) : base(context)
@@ -34,7 +34,7 @@ namespace ElectronicStore.Data.Service
             await Context.SaveChangesAsync();
 
             // Add Warranty
-            foreach(var warrantyID in productViewModel.warrantyIDs)
+            foreach (var warrantyID in productViewModel.warrantyIDs)
             {
                 var newWarrantyProduct = new WarrantytoProduct()
                 {
@@ -59,6 +59,42 @@ namespace ElectronicStore.Data.Service
             result.sellers = await Context.sellers.OrderBy(f => f.sellerName).ToListAsync();
             result.producers = await Context.producers.OrderBy(f => f.producerName).ToListAsync();
             return result;
+        }
+
+        public async Task updateProductAsync(ProductViewModel productViewModel)
+        {
+            var getProduct = await Context.products.FirstOrDefaultAsync(i => i.Id == productViewModel.Id);
+
+            if (getProduct != null)
+            {
+                getProduct.productName = productViewModel.productName;
+                getProduct.productDescription = productViewModel.productDescription;
+                getProduct.productPrice = productViewModel.productPrice;
+                getProduct.productPictureURL = productViewModel.productPictureURL;
+                getProduct.productCategory = productViewModel.productCategory;
+                getProduct.producyListDate = productViewModel.producyListDate;
+                getProduct.producerID = productViewModel.producerID;
+                getProduct.sellerID = productViewModel.sellerID;
+                
+                await Context.SaveChangesAsync();
+            }
+
+            // Remove existing warranty
+            var removeWarrantyDB = Context.warrantytoProducts.Where(w => w.productID == productViewModel.Id).ToList();
+            Context.warrantytoProducts.RemoveRange(removeWarrantyDB);
+            await Context.SaveChangesAsync();
+
+            // Add Warranty
+            foreach (var warrantyID in productViewModel.warrantyIDs)
+            {
+                var newWarrantyProduct = new WarrantytoProduct()
+                {
+                    productID = productViewModel.Id,
+                    Id = warrantyID
+                };
+                await Context.warrantytoProducts.AddAsync(newWarrantyProduct);
+            }
+            await Context.SaveChangesAsync();
         }
     }
 }

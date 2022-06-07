@@ -13,5 +13,6 @@ namespace ElectronicStore.Data.Service
         Task<Product> GetByIDAsync(int id);
         Task<ProductDropDownViewModel> GetProductDropDownValue();
         Task addNewProductAsync(ProductViewModel productViewModel);
+        Task updateProductAsync(ProductViewModel productViewModel);
     }
 }

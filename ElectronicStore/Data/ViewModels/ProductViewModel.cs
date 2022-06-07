@@ -8,6 +8,8 @@ namespace ElectronicStore.Data.ViewModels
 {
     public class ProductViewModel
     {
+        public int Id { get; set; }
+
         [Required(ErrorMessage = "Name is required!")]
         [Display(Name = "Product Name")]
         public string productName { get; set; }

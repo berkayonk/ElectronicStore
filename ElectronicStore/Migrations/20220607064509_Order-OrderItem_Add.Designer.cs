@@ -4,14 +4,16 @@ using ElectronicStore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ElectronicStore.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20220607064509_Order-OrderItem_Add")]
+    partial class OrderOrderItem_Add
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -153,29 +155,6 @@ namespace ElectronicStore.Migrations
                     b.ToTable("sellers");
                 });
 
-            modelBuilder.Entity("ElectronicStore.Models.ShoppingCartItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Amount")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ShoppingCartId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("shoppingCartItems");
-                });
-
             modelBuilder.Entity("ElectronicStore.Models.Warranty", b =>
                 {
                     b.Property<int>("Id")
@@ -252,15 +231,6 @@ namespace ElectronicStore.Migrations
                     b.Navigation("producers");
 
                     b.Navigation("sellers");
-                });
-
-            modelBuilder.Entity("ElectronicStore.Models.ShoppingCartItem", b =>
-                {
-                    b.HasOne("ElectronicStore.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId");
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("ElectronicStore.Models.WarrantytoProduct", b =>

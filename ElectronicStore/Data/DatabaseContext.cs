@@ -27,5 +27,10 @@ namespace ElectronicStore.Data
         public DbSet<WarrantytoProduct> warrantytoProducts { get; set; }
         public DbSet<Seller> sellers { get; set; }
         public DbSet<Producer> producers { get; set; }
+
+        // Order Relation
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> orderItems { get; set; }
+        public DbSet<ShoppingCartItem> shoppingCartItems { get; set; }
     }
 }
